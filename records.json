@@ -1,0 +1,846 @@
+[
+  {
+    "id": "byd-f3-001",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Engine",
+    "title": "Engine misfire and rough running",
+    "symptoms": [
+      "Shaking at idle",
+      "Weak acceleration",
+      "Check Engine light on or flashing",
+      "Higher fuel consumption"
+    ],
+    "possible_causes": [
+      "Worn or incorrectly gapped spark plugs",
+      "Weak ignition coils",
+      "Damaged coil wiring or connectors",
+      "Vacuum/air leak after the MAF sensor",
+      "Clogged fuel injector"
+    ],
+    "diagnosis_steps": [
+      "Read codes with an OBD2 scanner",
+      "Inspect the spark plugs and compare their condition cylinder by cylinder",
+      "Swap a coil to another cylinder and see if the misfire follows it",
+      "Inspect the intake hoses"
+    ],
+    "fix": "Replace spark plugs with the specified type, replace the faulty coil, and clean or replace the injector if needed.",
+    "severity": "medium",
+    "drive_advice": "Short distances are OK if the light is steady; avoid driving if it is flashing because it can damage the catalytic converter",
+    "obd_codes": [
+      "P0300",
+      "P0301",
+      "P0302",
+      "P0303",
+      "P0304"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Engine\nFault: Engine misfire and rough running\nSymptoms: Shaking at idle; Weak acceleration; Check Engine light on or flashing; Higher fuel consumption\nPossible causes: Worn or incorrectly gapped spark plugs; Weak ignition coils; Damaged coil wiring or connectors; Vacuum/air leak after the MAF sensor; Clogged fuel injector\nDiagnosis steps: Read codes with an OBD2 scanner; Inspect the spark plugs and compare their condition cylinder by cylinder; Swap a coil to another cylinder and see if the misfire follows it; Inspect the intake hoses\nFix: Replace spark plugs with the specified type, replace the faulty coil, and clean or replace the injector if needed.\nSeverity: medium\nCan it be driven? Short distances are OK if the light is steady; avoid driving if it is flashing because it can damage the catalytic converter\nOBD2 codes: P0300, P0301, P0302, P0303, P0304"
+  },
+  {
+    "id": "byd-f3-002",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Engine",
+    "title": "Hard starting when the engine is cold",
+    "symptoms": [
+      "Starter cranks but engine does not start",
+      "Starts only after several attempts",
+      "Rough running right after starting"
+    ],
+    "possible_causes": [
+      "Weak battery",
+      "Weak fuel pump",
+      "Coolant temperature sensor (ECT) reading incorrectly",
+      "Worn spark plugs",
+      "Clogged fuel filter"
+    ],
+    "diagnosis_steps": [
+      "Measure battery voltage (should be about 12.4 V or more with the car off)",
+      "Listen for the fuel pump priming when the ignition is turned on",
+      "Check the ECT reading with a scan tool"
+    ],
+    "fix": "Charge or replace the battery, replace the fuel filter or pump, and replace the faulty sensor.",
+    "severity": "medium",
+    "drive_advice": "OK as long as it starts, but get it checked soon",
+    "obd_codes": [
+      "P0117",
+      "P0118"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Engine\nFault: Hard starting when the engine is cold\nSymptoms: Starter cranks but engine does not start; Starts only after several attempts; Rough running right after starting\nPossible causes: Weak battery; Weak fuel pump; Coolant temperature sensor (ECT) reading incorrectly; Worn spark plugs; Clogged fuel filter\nDiagnosis steps: Measure battery voltage (should be about 12.4 V or more with the car off); Listen for the fuel pump priming when the ignition is turned on; Check the ECT reading with a scan tool\nFix: Charge or replace the battery, replace the fuel filter or pump, and replace the faulty sensor.\nSeverity: medium\nCan it be driven? OK as long as it starts, but get it checked soon\nOBD2 codes: P0117, P0118"
+  },
+  {
+    "id": "byd-f3-003",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Engine",
+    "title": "Oil leak from the valve cover gasket",
+    "symptoms": [
+      "Smell of burning oil",
+      "Light smoke from the engine bay",
+      "Oil on the side of the engine or around the spark plugs"
+    ],
+    "possible_causes": [
+      "Valve cover gasket hardened with age and heat",
+      "Damaged spark plug tube seals"
+    ],
+    "diagnosis_steps": [
+      "Visually inspect for oil around the valve cover",
+      "Check for oil inside the spark plug wells"
+    ],
+    "fix": "Replace the valve cover gasket and spark plug tube seals, and clean the area.",
+    "severity": "low",
+    "drive_advice": "OK while monitoring the oil level",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Engine\nFault: Oil leak from the valve cover gasket\nSymptoms: Smell of burning oil; Light smoke from the engine bay; Oil on the side of the engine or around the spark plugs\nPossible causes: Valve cover gasket hardened with age and heat; Damaged spark plug tube seals\nDiagnosis steps: Visually inspect for oil around the valve cover; Check for oil inside the spark plug wells\nFix: Replace the valve cover gasket and spark plug tube seals, and clean the area.\nSeverity: low\nCan it be driven? OK while monitoring the oil level"
+  },
+  {
+    "id": "byd-f3-004",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Engine",
+    "title": "Excessive oil consumption",
+    "symptoms": [
+      "Oil level drops between services",
+      "Blue smoke from the exhaust, especially at start-up or under acceleration"
+    ],
+    "possible_causes": [
+      "Worn piston rings",
+      "Worn valve stem seals",
+      "Blocked PCV system",
+      "External leak"
+    ],
+    "diagnosis_steps": [
+      "Measure oil loss over a known distance",
+      "Inspect the PCV valve",
+      "Run a compression test if consumption is high"
+    ],
+    "fix": "Clean or replace the PCV valve first, then repair seals or engine internals if needed.",
+    "severity": "medium",
+    "drive_advice": "OK while checking the oil level frequently; severe oil loss can destroy the engine",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Engine\nFault: Excessive oil consumption\nSymptoms: Oil level drops between services; Blue smoke from the exhaust, especially at start-up or under acceleration\nPossible causes: Worn piston rings; Worn valve stem seals; Blocked PCV system; External leak\nDiagnosis steps: Measure oil loss over a known distance; Inspect the PCV valve; Run a compression test if consumption is high\nFix: Clean or replace the PCV valve first, then repair seals or engine internals if needed.\nSeverity: medium\nCan it be driven? OK while checking the oil level frequently; severe oil loss can destroy the engine"
+  },
+  {
+    "id": "byd-f3-005",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Fuel/Air",
+    "title": "Lean mixture and weak power",
+    "symptoms": [
+      "Weak acceleration",
+      "Rough running",
+      "Check Engine light"
+    ],
+    "possible_causes": [
+      "Vacuum leak in hoses or the intake manifold",
+      "Dirty MAF sensor",
+      "Weak fuel filter or fuel pump",
+      "Faulty oxygen sensor"
+    ],
+    "diagnosis_steps": [
+      "Read fuel trim values with a scan tool",
+      "Inspect hoses and connections for leaks",
+      "Clean the MAF sensor with a dedicated cleaner"
+    ],
+    "fix": "Fix the leak, clean or replace the MAF sensor, and replace the fuel filter.",
+    "severity": "medium",
+    "drive_advice": "OK for short distances",
+    "obd_codes": [
+      "P0171",
+      "P0101"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Fuel/Air\nFault: Lean mixture and weak power\nSymptoms: Weak acceleration; Rough running; Check Engine light\nPossible causes: Vacuum leak in hoses or the intake manifold; Dirty MAF sensor; Weak fuel filter or fuel pump; Faulty oxygen sensor\nDiagnosis steps: Read fuel trim values with a scan tool; Inspect hoses and connections for leaks; Clean the MAF sensor with a dedicated cleaner\nFix: Fix the leak, clean or replace the MAF sensor, and replace the fuel filter.\nSeverity: medium\nCan it be driven? OK for short distances\nOBD2 codes: P0171, P0101"
+  },
+  {
+    "id": "byd-f3-006",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Fuel/Air",
+    "title": "Unstable idle or engine stalling",
+    "symptoms": [
+      "Idle speed goes up and down",
+      "Engine stalls when stopped at a light",
+      "Noticeable vibration"
+    ],
+    "possible_causes": [
+      "Dirty throttle body",
+      "Idle air control valve (if fitted)",
+      "Air leak",
+      "Throttle or pedal position sensor fault"
+    ],
+    "diagnosis_steps": [
+      "Clean the throttle body with the correct cleaner",
+      "Check for air leaks",
+      "Read fault codes"
+    ],
+    "fix": "Clean the throttle body, perform an idle relearn if the model requires it, and fix any air leak.",
+    "severity": "low",
+    "drive_advice": "OK",
+    "obd_codes": [
+      "P0505",
+      "P0506",
+      "P0507"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Fuel/Air\nFault: Unstable idle or engine stalling\nSymptoms: Idle speed goes up and down; Engine stalls when stopped at a light; Noticeable vibration\nPossible causes: Dirty throttle body; Idle air control valve (if fitted); Air leak; Throttle or pedal position sensor fault\nDiagnosis steps: Clean the throttle body with the correct cleaner; Check for air leaks; Read fault codes\nFix: Clean the throttle body, perform an idle relearn if the model requires it, and fix any air leak.\nSeverity: low\nCan it be driven? OK\nOBD2 codes: P0505, P0506, P0507"
+  },
+  {
+    "id": "byd-f3-007",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Cooling",
+    "title": "Engine overheating",
+    "symptoms": [
+      "Temperature gauge climbing",
+      "Steam from under the hood",
+      "Coolant level dropping"
+    ],
+    "possible_causes": [
+      "Stuck thermostat",
+      "Clogged or leaking radiator",
+      "Cooling fan not working",
+      "Weak water pump",
+      "Head gasket failure (serious)"
+    ],
+    "diagnosis_steps": [
+      "Check the coolant level only when the engine is cold",
+      "Look for leaks around hoses and the radiator",
+      "Confirm the fan runs",
+      "Check for bubbles or oil in the coolant"
+    ],
+    "fix": "Fix the cause: thermostat, radiator, pump or fan. Oil mixed with coolant points to the head gasket.",
+    "severity": "high",
+    "drive_advice": "Do not keep driving; pull over and switch the engine off to avoid engine damage",
+    "obd_codes": [
+      "P0217"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Cooling\nFault: Engine overheating\nSymptoms: Temperature gauge climbing; Steam from under the hood; Coolant level dropping\nPossible causes: Stuck thermostat; Clogged or leaking radiator; Cooling fan not working; Weak water pump; Head gasket failure (serious)\nDiagnosis steps: Check the coolant level only when the engine is cold; Look for leaks around hoses and the radiator; Confirm the fan runs; Check for bubbles or oil in the coolant\nFix: Fix the cause: thermostat, radiator, pump or fan. Oil mixed with coolant points to the head gasket.\nSeverity: high\nCan it be driven? Do not keep driving; pull over and switch the engine off to avoid engine damage\nOBD2 codes: P0217"
+  },
+  {
+    "id": "byd-f3-008",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Cooling",
+    "title": "Radiator fan not working",
+    "symptoms": [
+      "Temperature rises in traffic and drops when moving",
+      "A/C is weak when stationary"
+    ],
+    "possible_causes": [
+      "Blown fuse or faulty relay",
+      "Burned-out fan motor",
+      "Temperature sensor or wiring fault"
+    ],
+    "diagnosis_steps": [
+      "Check the fuse and relay",
+      "Turn on the A/C and see whether the fan spins",
+      "Power the motor directly from the battery to test it"
+    ],
+    "fix": "Replace the relay, fuse, motor or sensor depending on the cause.",
+    "severity": "high",
+    "drive_advice": "Risk of overheating in traffic; repair quickly",
+    "obd_codes": [
+      "P0480"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Cooling\nFault: Radiator fan not working\nSymptoms: Temperature rises in traffic and drops when moving; A/C is weak when stationary\nPossible causes: Blown fuse or faulty relay; Burned-out fan motor; Temperature sensor or wiring fault\nDiagnosis steps: Check the fuse and relay; Turn on the A/C and see whether the fan spins; Power the motor directly from the battery to test it\nFix: Replace the relay, fuse, motor or sensor depending on the cause.\nSeverity: high\nCan it be driven? Risk of overheating in traffic; repair quickly\nOBD2 codes: P0480"
+  },
+  {
+    "id": "byd-f3-009",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Engine",
+    "title": "Timing belt and drive belts",
+    "symptoms": [
+      "Ticking or squealing from the front of the engine",
+      "Unusual vibration",
+      "If the timing belt snaps the engine stops suddenly"
+    ],
+    "possible_causes": [
+      "Belt has reached the end of its service life",
+      "Faulty tensioner or idler bearing"
+    ],
+    "diagnosis_steps": [
+      "Check the owner's manual for the replacement interval for this model",
+      "Visually inspect the belt for cracks or wear"
+    ],
+    "fix": "Replace the belt, tensioner and idler, and the water pump at the same time, following the service schedule.",
+    "severity": "high",
+    "drive_advice": "Replace on schedule; a broken belt can cause major engine damage",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Engine\nFault: Timing belt and drive belts\nSymptoms: Ticking or squealing from the front of the engine; Unusual vibration; If the timing belt snaps the engine stops suddenly\nPossible causes: Belt has reached the end of its service life; Faulty tensioner or idler bearing\nDiagnosis steps: Check the owner's manual for the replacement interval for this model; Visually inspect the belt for cracks or wear\nFix: Replace the belt, tensioner and idler, and the water pump at the same time, following the service schedule.\nSeverity: high\nCan it be driven? Replace on schedule; a broken belt can cause major engine damage"
+  },
+  {
+    "id": "byd-f3-010",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Transmission",
+    "title": "Clutch slipping (manual)",
+    "symptoms": [
+      "Engine revs rise but the car does not accelerate accordingly",
+      "Burning smell",
+      "Slips especially uphill or in high gears"
+    ],
+    "possible_causes": [
+      "Worn clutch disc or pressure plate",
+      "Oil contamination",
+      "Incorrect adjustment"
+    ],
+    "diagnosis_steps": [
+      "Do a load test in a high gear",
+      "Note whether the clutch engagement point is very high"
+    ],
+    "fix": "Replace the clutch kit (disc, pressure plate, release bearing).",
+    "severity": "medium",
+    "drive_advice": "OK for a short time but gets worse progressively",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Transmission\nFault: Clutch slipping (manual)\nSymptoms: Engine revs rise but the car does not accelerate accordingly; Burning smell; Slips especially uphill or in high gears\nPossible causes: Worn clutch disc or pressure plate; Oil contamination; Incorrect adjustment\nDiagnosis steps: Do a load test in a high gear; Note whether the clutch engagement point is very high\nFix: Replace the clutch kit (disc, pressure plate, release bearing).\nSeverity: medium\nCan it be driven? OK for a short time but gets worse progressively"
+  },
+  {
+    "id": "byd-f3-011",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Transmission",
+    "title": "Difficult gear shifting (manual)",
+    "symptoms": [
+      "Gear grinds or refuses to engage",
+      "Friction noise",
+      "Clutch pedal heavy or sinking to the floor"
+    ],
+    "possible_causes": [
+      "Low or degraded gearbox oil",
+      "Clutch hydraulic fault (master or slave cylinder)",
+      "Worn synchronizers",
+      "Shift cable problem"
+    ],
+    "diagnosis_steps": [
+      "Check the clutch hydraulics and gearbox oil",
+      "Determine whether it happens in all gears or one gear only"
+    ],
+    "fix": "Change the gearbox oil, repair the clutch hydraulics, or service the gearbox if synchronizers are worn.",
+    "severity": "medium",
+    "drive_advice": "OK with care",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Transmission\nFault: Difficult gear shifting (manual)\nSymptoms: Gear grinds or refuses to engage; Friction noise; Clutch pedal heavy or sinking to the floor\nPossible causes: Low or degraded gearbox oil; Clutch hydraulic fault (master or slave cylinder); Worn synchronizers; Shift cable problem\nDiagnosis steps: Check the clutch hydraulics and gearbox oil; Determine whether it happens in all gears or one gear only\nFix: Change the gearbox oil, repair the clutch hydraulics, or service the gearbox if synchronizers are worn.\nSeverity: medium\nCan it be driven? OK with care"
+  },
+  {
+    "id": "byd-f3-012",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Transmission",
+    "title": "Delayed or harsh shifting (automatic, if fitted)",
+    "symptoms": [
+      "Delay when selecting D or R",
+      "Bump when changing gears",
+      "Slipping"
+    ],
+    "possible_causes": [
+      "Low or burnt transmission fluid",
+      "Solenoid or filter problem",
+      "Speed sensor fault"
+    ],
+    "diagnosis_steps": [
+      "Check fluid level and colour",
+      "Read TCM codes with a suitable scan tool"
+    ],
+    "fix": "Change the fluid and filter, then inspect the solenoids if the problem persists.",
+    "severity": "medium",
+    "drive_advice": "OK for short distances; delaying the check increases damage",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Transmission\nFault: Delayed or harsh shifting (automatic, if fitted)\nSymptoms: Delay when selecting D or R; Bump when changing gears; Slipping\nPossible causes: Low or burnt transmission fluid; Solenoid or filter problem; Speed sensor fault\nDiagnosis steps: Check fluid level and colour; Read TCM codes with a suitable scan tool\nFix: Change the fluid and filter, then inspect the solenoids if the problem persists.\nSeverity: medium\nCan it be driven? OK for short distances; delaying the check increases damage"
+  },
+  {
+    "id": "byd-f3-013",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Brakes",
+    "title": "Squealing or grinding when braking",
+    "symptoms": [
+      "Metallic squeal",
+      "Grinding noise",
+      "Longer stopping distance"
+    ],
+    "possible_causes": [
+      "Brake pads worn out",
+      "Scored discs or drums",
+      "Dust or rust buildup"
+    ],
+    "diagnosis_steps": [
+      "Check pad thickness",
+      "Inspect the disc surface"
+    ],
+    "fix": "Replace the pads, and machine or replace the discs if scored.",
+    "severity": "high",
+    "drive_advice": "Do not delay replacement if the noise is metallic",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Brakes\nFault: Squealing or grinding when braking\nSymptoms: Metallic squeal; Grinding noise; Longer stopping distance\nPossible causes: Brake pads worn out; Scored discs or drums; Dust or rust buildup\nDiagnosis steps: Check pad thickness; Inspect the disc surface\nFix: Replace the pads, and machine or replace the discs if scored.\nSeverity: high\nCan it be driven? Do not delay replacement if the noise is metallic"
+  },
+  {
+    "id": "byd-f3-014",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Brakes",
+    "title": "Steering wheel or pedal vibration when braking",
+    "symptoms": [
+      "Clear vibration when braking from high speed"
+    ],
+    "possible_causes": [
+      "Warped brake discs",
+      "Unevenly worn pads",
+      "Stuck caliper"
+    ],
+    "diagnosis_steps": [
+      "Measure disc runout",
+      "Check for uneven heat after driving"
+    ],
+    "fix": "Resurface or replace the discs, together with the pads.",
+    "severity": "medium",
+    "drive_advice": "OK with care",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Brakes\nFault: Steering wheel or pedal vibration when braking\nSymptoms: Clear vibration when braking from high speed\nPossible causes: Warped brake discs; Unevenly worn pads; Stuck caliper\nDiagnosis steps: Measure disc runout; Check for uneven heat after driving\nFix: Resurface or replace the discs, together with the pads.\nSeverity: medium\nCan it be driven? OK with care"
+  },
+  {
+    "id": "byd-f3-015",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Brakes",
+    "title": "Spongy brake pedal or pedal sinking to the floor",
+    "symptoms": [
+      "Soft pedal",
+      "Pedal sinks to the floor",
+      "Weak braking"
+    ],
+    "possible_causes": [
+      "Air in the brake system",
+      "Brake fluid leak",
+      "Failing master cylinder",
+      "Swollen brake hoses"
+    ],
+    "diagnosis_steps": [
+      "Check brake fluid level and look for leaks",
+      "Test whether the pedal holds under steady pressure"
+    ],
+    "fix": "Bleed the system and fix the leak, or replace the master cylinder.",
+    "severity": "high",
+    "drive_advice": "Do not drive; brakes are a safety system",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Brakes\nFault: Spongy brake pedal or pedal sinking to the floor\nSymptoms: Soft pedal; Pedal sinks to the floor; Weak braking\nPossible causes: Air in the brake system; Brake fluid leak; Failing master cylinder; Swollen brake hoses\nDiagnosis steps: Check brake fluid level and look for leaks; Test whether the pedal holds under steady pressure\nFix: Bleed the system and fix the leak, or replace the master cylinder.\nSeverity: high\nCan it be driven? Do not drive; brakes are a safety system"
+  },
+  {
+    "id": "byd-f3-016",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Suspension",
+    "title": "Knocking noise from the suspension over bumps",
+    "symptoms": [
+      "Knock at the front or rear",
+      "Vibration",
+      "Sagging or leaning"
+    ],
+    "possible_causes": [
+      "Worn shock absorbers or their mounts",
+      "Control arms or bushings",
+      "Worn stabilizer links",
+      "Control arm"
+    ],
+    "diagnosis_steps": [
+      "Visually check for leaks",
+      "Bounce test by pushing down on the fender",
+      "Lift the car and check wheels for play"
+    ],
+    "fix": "Replace the worn part, then have the wheel alignment done.",
+    "severity": "medium",
+    "drive_advice": "OK at reduced speed",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Suspension\nFault: Knocking noise from the suspension over bumps\nSymptoms: Knock at the front or rear; Vibration; Sagging or leaning\nPossible causes: Worn shock absorbers or their mounts; Control arms or bushings; Worn stabilizer links; Control arm\nDiagnosis steps: Visually check for leaks; Bounce test by pushing down on the fender; Lift the car and check wheels for play\nFix: Replace the worn part, then have the wheel alignment done.\nSeverity: medium\nCan it be driven? OK at reduced speed"
+  },
+  {
+    "id": "byd-f3-017",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Steering",
+    "title": "Heavy steering or power steering noise",
+    "symptoms": [
+      "Whine when turning",
+      "Difficulty turning the wheel",
+      "Low power steering fluid"
+    ],
+    "possible_causes": [
+      "Low fluid or a leak",
+      "Loose belt",
+      "Failing power steering pump",
+      "Steering rack seal leak"
+    ],
+    "diagnosis_steps": [
+      "Check power steering fluid level",
+      "Inspect the belt and look for leaks"
+    ],
+    "fix": "Top up the fluid and fix the leak, replace the belt, pump or rack depending on the case.",
+    "severity": "medium",
+    "drive_advice": "OK with care",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Steering\nFault: Heavy steering or power steering noise\nSymptoms: Whine when turning; Difficulty turning the wheel; Low power steering fluid\nPossible causes: Low fluid or a leak; Loose belt; Failing power steering pump; Steering rack seal leak\nDiagnosis steps: Check power steering fluid level; Inspect the belt and look for leaks\nFix: Top up the fluid and fix the leak, replace the belt, pump or rack depending on the case.\nSeverity: medium\nCan it be driven? OK with care"
+  },
+  {
+    "id": "byd-f3-018",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Tires/Alignment",
+    "title": "Car pulling to one side or uneven tire wear",
+    "symptoms": [
+      "Pulls left or right",
+      "Steering wheel off-centre",
+      "Wear on one edge of the tire"
+    ],
+    "possible_causes": [
+      "Uneven tire pressures",
+      "Wrong front alignment",
+      "Worn suspension parts"
+    ],
+    "diagnosis_steps": [
+      "Measure each tire's pressure",
+      "Inspect tire wear",
+      "Do an alignment and balance"
+    ],
+    "fix": "Correct tire pressure, do an alignment and balance, and repair any worn suspension part.",
+    "severity": "low",
+    "drive_advice": "OK",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Tires/Alignment\nFault: Car pulling to one side or uneven tire wear\nSymptoms: Pulls left or right; Steering wheel off-centre; Wear on one edge of the tire\nPossible causes: Uneven tire pressures; Wrong front alignment; Worn suspension parts\nDiagnosis steps: Measure each tire's pressure; Inspect tire wear; Do an alignment and balance\nFix: Correct tire pressure, do an alignment and balance, and repair any worn suspension part.\nSeverity: low\nCan it be driven? OK"
+  },
+  {
+    "id": "byd-f3-019",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Electrical",
+    "title": "Battery draining or weak",
+    "symptoms": [
+      "Battery goes flat after the car sits",
+      "Weak cranking",
+      "Battery warning light"
+    ],
+    "possible_causes": [
+      "Old battery",
+      "Alternator not charging",
+      "Parasitic drain",
+      "Corroded terminals"
+    ],
+    "diagnosis_steps": [
+      "Measure charging voltage with the engine running (about 13.5-14.5 V)",
+      "Inspect the terminals",
+      "Test current draw with the car off"
+    ],
+    "fix": "Replace the battery or alternator, clean the terminals, and trace the parasitic drain.",
+    "severity": "medium",
+    "drive_advice": "OK if charging works",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Electrical\nFault: Battery draining or weak\nSymptoms: Battery goes flat after the car sits; Weak cranking; Battery warning light\nPossible causes: Old battery; Alternator not charging; Parasitic drain; Corroded terminals\nDiagnosis steps: Measure charging voltage with the engine running (about 13.5-14.5 V); Inspect the terminals; Test current draw with the car off\nFix: Replace the battery or alternator, clean the terminals, and trace the parasitic drain.\nSeverity: medium\nCan it be driven? OK if charging works"
+  },
+  {
+    "id": "byd-f3-020",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Electrical",
+    "title": "Starter does not crank the engine",
+    "symptoms": [
+      "Click only",
+      "Nothing happens",
+      "Dim lights"
+    ],
+    "possible_causes": [
+      "Flat battery",
+      "Loose terminals",
+      "Faulty starter or relay",
+      "Ignition switch or immobilizer issue"
+    ],
+    "diagnosis_steps": [
+      "Measure voltage",
+      "Try jump-starting",
+      "Check the terminals and ground connections"
+    ],
+    "fix": "Charge or replace the battery, repair the terminals, or replace the starter.",
+    "severity": "medium",
+    "drive_advice": "Not applicable",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Electrical\nFault: Starter does not crank the engine\nSymptoms: Click only; Nothing happens; Dim lights\nPossible causes: Flat battery; Loose terminals; Faulty starter or relay; Ignition switch or immobilizer issue\nDiagnosis steps: Measure voltage; Try jump-starting; Check the terminals and ground connections\nFix: Charge or replace the battery, repair the terminals, or replace the starter.\nSeverity: medium\nCan it be driven? Not applicable"
+  },
+  {
+    "id": "byd-f3-021",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "A/C",
+    "title": "A/C weak or not cooling",
+    "symptoms": [
+      "Air not cold",
+      "Compressor does not engage",
+      "Strange noise from the compressor"
+    ],
+    "possible_causes": [
+      "Low refrigerant",
+      "Leak",
+      "Clogged cabin filter",
+      "Compressor or clutch fault",
+      "Condenser fan"
+    ],
+    "diagnosis_steps": [
+      "Measure refrigerant pressure with a manifold gauge",
+      "Inspect the cabin filter",
+      "Listen for the compressor engaging"
+    ],
+    "fix": "Clean or replace the cabin filter, recharge the refrigerant after leak testing, and replace the compressor if faulty.",
+    "severity": "low",
+    "drive_advice": "OK",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: A/C\nFault: A/C weak or not cooling\nSymptoms: Air not cold; Compressor does not engage; Strange noise from the compressor\nPossible causes: Low refrigerant; Leak; Clogged cabin filter; Compressor or clutch fault; Condenser fan\nDiagnosis steps: Measure refrigerant pressure with a manifold gauge; Inspect the cabin filter; Listen for the compressor engaging\nFix: Clean or replace the cabin filter, recharge the refrigerant after leak testing, and replace the compressor if faulty.\nSeverity: low\nCan it be driven? OK"
+  },
+  {
+    "id": "byd-f3-022",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Exhaust",
+    "title": "Catalytic converter efficiency code or exhaust noise",
+    "symptoms": [
+      "Check Engine light",
+      "Loud exhaust noise",
+      "Rotten-egg smell"
+    ],
+    "possible_causes": [
+      "Weak catalytic converter",
+      "Oxygen sensor fault",
+      "Exhaust pipe leak",
+      "Gasket failure"
+    ],
+    "diagnosis_steps": [
+      "Read the code",
+      "Visually inspect and listen for leaks",
+      "Compare oxygen sensor readings before and after the converter"
+    ],
+    "fix": "Replace the oxygen sensor first if symptoms point to it, then the converter or repair the exhaust.",
+    "severity": "medium",
+    "drive_advice": "OK",
+    "obd_codes": [
+      "P0420",
+      "P0136",
+      "P0141"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Exhaust\nFault: Catalytic converter efficiency code or exhaust noise\nSymptoms: Check Engine light; Loud exhaust noise; Rotten-egg smell\nPossible causes: Weak catalytic converter; Oxygen sensor fault; Exhaust pipe leak; Gasket failure\nDiagnosis steps: Read the code; Visually inspect and listen for leaks; Compare oxygen sensor readings before and after the converter\nFix: Replace the oxygen sensor first if symptoms point to it, then the converter or repair the exhaust.\nSeverity: medium\nCan it be driven? OK\nOBD2 codes: P0420, P0136, P0141"
+  },
+  {
+    "id": "byd-f3-023",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Sensors",
+    "title": "Crankshaft or camshaft position sensor fault",
+    "symptoms": [
+      "Engine stalls suddenly",
+      "Will not start",
+      "Check Engine light",
+      "Stuttering"
+    ],
+    "possible_causes": [
+      "Faulty crankshaft (CKP) or camshaft (CMP) sensor",
+      "Wiring or connector issue",
+      "Dirty or damaged reluctor wheel"
+    ],
+    "diagnosis_steps": [
+      "Read the code",
+      "Inspect the connector and wiring",
+      "Test the signal with an oscilloscope if available"
+    ],
+    "fix": "Replace the faulty sensor and repair the connector.",
+    "severity": "high",
+    "drive_advice": "Risk of sudden stalling",
+    "obd_codes": [
+      "P0335",
+      "P0340"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Sensors\nFault: Crankshaft or camshaft position sensor fault\nSymptoms: Engine stalls suddenly; Will not start; Check Engine light; Stuttering\nPossible causes: Faulty crankshaft (CKP) or camshaft (CMP) sensor; Wiring or connector issue; Dirty or damaged reluctor wheel\nDiagnosis steps: Read the code; Inspect the connector and wiring; Test the signal with an oscilloscope if available\nFix: Replace the faulty sensor and repair the connector.\nSeverity: high\nCan it be driven? Risk of sudden stalling\nOBD2 codes: P0335, P0340"
+  },
+  {
+    "id": "byd-f3-024",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Electrical",
+    "title": "Power window or central locking not working",
+    "symptoms": [
+      "Window will not go up",
+      "Motor sound but no movement",
+      "Central lock works intermittently"
+    ],
+    "possible_causes": [
+      "Faulty door switch",
+      "Window motor",
+      "Broken window regulator",
+      "Blown fuse or broken wire in the door harness"
+    ],
+    "diagnosis_steps": [
+      "Check the fuse",
+      "Listen for the motor",
+      "Inspect the wiring between the door and the body"
+    ],
+    "fix": "Replace the fuse, switch, regulator or motor depending on the fault.",
+    "severity": "low",
+    "drive_advice": "OK",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Electrical\nFault: Power window or central locking not working\nSymptoms: Window will not go up; Motor sound but no movement; Central lock works intermittently\nPossible causes: Faulty door switch; Window motor; Broken window regulator; Blown fuse or broken wire in the door harness\nDiagnosis steps: Check the fuse; Listen for the motor; Inspect the wiring between the door and the body\nFix: Replace the fuse, switch, regulator or motor depending on the fault.\nSeverity: low\nCan it be driven? OK"
+  },
+  {
+    "id": "byd-f3-025",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Fuel",
+    "title": "Inaccurate fuel gauge or fuel smell",
+    "symptoms": [
+      "Gauge jumps or stays fixed",
+      "Smell of fuel",
+      "Car stalls for no clear reason"
+    ],
+    "possible_causes": [
+      "Faulty fuel level sender",
+      "Loose fuel cap",
+      "Leak or EVAP system fault"
+    ],
+    "diagnosis_steps": [
+      "Check the fuel cap",
+      "Inspect connections for leaks",
+      "Read fault codes"
+    ],
+    "fix": "Replace the level sender or cap, or repair the leak.",
+    "severity": "medium",
+    "drive_advice": "If the fuel smell is strong, stop and inspect immediately because of fire risk",
+    "obd_codes": [
+      "P0455",
+      "P0456"
+    ],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Fuel\nFault: Inaccurate fuel gauge or fuel smell\nSymptoms: Gauge jumps or stays fixed; Smell of fuel; Car stalls for no clear reason\nPossible causes: Faulty fuel level sender; Loose fuel cap; Leak or EVAP system fault\nDiagnosis steps: Check the fuel cap; Inspect connections for leaks; Read fault codes\nFix: Replace the level sender or cap, or repair the leak.\nSeverity: medium\nCan it be driven? If the fuel smell is strong, stop and inspect immediately because of fire risk\nOBD2 codes: P0455, P0456"
+  },
+  {
+    "id": "byd-f3-026",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Engine",
+    "title": "Vibration caused by worn engine mounts",
+    "symptoms": [
+      "Vibration at idle and under load",
+      "Clunk when changing gears",
+      "Vibration felt in the seat"
+    ],
+    "possible_causes": [
+      "Engine or gearbox mounts torn or hardened"
+    ],
+    "diagnosis_steps": [
+      "Visually inspect the mounts for cracks",
+      "Open the hood and check engine movement while shifting gears"
+    ],
+    "fix": "Replace the damaged mount.",
+    "severity": "low",
+    "drive_advice": "OK",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Engine\nFault: Vibration caused by worn engine mounts\nSymptoms: Vibration at idle and under load; Clunk when changing gears; Vibration felt in the seat\nPossible causes: Engine or gearbox mounts torn or hardened\nDiagnosis steps: Visually inspect the mounts for cracks; Open the hood and check engine movement while shifting gears\nFix: Replace the damaged mount.\nSeverity: low\nCan it be driven? OK"
+  },
+  {
+    "id": "byd-f3-027",
+    "language": "en",
+    "make": "BYD",
+    "model": "F3",
+    "system": "Engine",
+    "title": "Drive belt squeal",
+    "symptoms": [
+      "Squeal at start-up or with the A/C on",
+      "Alternator or power steering weakens",
+      "Cracked belt"
+    ],
+    "possible_causes": [
+      "Loose or worn belt",
+      "Tensioner or idler bearing",
+      "Oil contamination"
+    ],
+    "diagnosis_steps": [
+      "Visually inspect the belt and tension",
+      "Locate the source of the noise"
+    ],
+    "fix": "Replace the belt and the tensioner if needed.",
+    "severity": "low",
+    "drive_advice": "OK, but a snapped belt stops charging, power steering and cooling",
+    "obd_codes": [],
+    "source_type": "synthetic_general_knowledge",
+    "verified": false,
+    "text": "Vehicle: BYD F3\nSystem: Engine\nFault: Drive belt squeal\nSymptoms: Squeal at start-up or with the A/C on; Alternator or power steering weakens; Cracked belt\nPossible causes: Loose or worn belt; Tensioner or idler bearing; Oil contamination\nDiagnosis steps: Visually inspect the belt and tension; Locate the source of the noise\nFix: Replace the belt and the tensioner if needed.\nSeverity: low\nCan it be driven? OK, but a snapped belt stops charging, power steering and cooling"
+  }
+]

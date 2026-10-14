@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Diagnostic RAG Copilot | Live Demo</title>
+  <!-- Preload fonts for crisp English & Arabic typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <!-- Optional marked.js for markdown rendering with pure JS fallback -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --bg-base: #0a0d14;
+      --bg-surface: #111726;
+      --bg-surface-elevated: #161f33;
+      --bg-surface-hover: #1c2740;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(56, 189, 248, 0.6);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.25);
+      --primary-dark: #0284c7;
+      --accent-groq: #f97316;
+      --accent-gemini: #38bdf8;
+      --severity-high-text: #f87171;
+      --severity-high-bg: rgba(239, 68, 68, 0.15);
+      --severity-high-border: rgba(239, 68, 68, 0.35);
+      --severity-med-text: #fbbf24;
+      --severity-med-bg: rgba(245, 158, 11, 0.15);
+      --severity-med-border: rgba(245, 158, 11, 0.35);
+      --severity-low-text: #34d399;
+      --severity-low-bg: rgba(16, 185, 129, 0.15);
+      --severity-low-border: rgba(16, 185, 129, 0.35);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --font-sans: 'Inter', 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(14, 165, 233, 0.12), transparent),
+        radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.06), transparent);
+      background-attachment: fixed;
+    }
+
+    /* Container */
+    .app-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+      color: #fff;
+    }
+
+    .brand-title h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-title .badge-demo {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .brand-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .api-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Configuration Bar */
+    .config-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .config-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .config-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .config-field label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .config-input {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .config-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-glow);
+    }
+
+    .config-input.input-text {
+      width: 100px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .config-input.input-num {
+      width: 65px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Quick Demo Questions Section */
+    .quick-section {
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .quick-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--text-main);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .quick-btn:hover {
+      background: var(--bg-surface-elevated);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .quick-btn.active-preset {
+      border-color: var(--primary);
+      background: var(--bg-surface-elevated);
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    .quick-btn-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .lang-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .lang-ar {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    .lang-en {
+      background: rgba(56, 189, 248, 0.18);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .quick-btn-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quick-btn-preview {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Arabic typography tweak */
+    [dir="auto"], [dir="rtl"] {
+      font-family: 'Cairo', var(--font-sans);
+    }
+
+    /* Query Box */
+    .query-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .query-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .query-header label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .shortcut-hint {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .textarea-wrapper {
+      position: relative;
+    }
+
+    #question-input {
+      width: 100%;
+      min-height: 90px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    #question-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-glow);
+    }
+
+    .query-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .query-info {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-clear {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-clear:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-main);
+    }
+
+    .btn-diagnose {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-diagnose:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+      filter: brightness(1.1);
+    }
+
+    .btn-diagnose:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-diagnose:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      filter: grayscale(0.5);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Results Section */
+    .results-area {
+      position: relative;
+    }
+
+    /* Empty state */
+    .empty-state {
+      background: var(--bg-surface);
+      border: 1px dashed var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-dim);
+    }
+
+    .empty-state-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      opacity: 0.8;
+    }
+
+    .empty-state h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .empty-state p {
+      font-size: 0.88rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Scanning loader */
+    .scanning-loader {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px 24px;
+      text-align: center;
+      display: none;
+    }
+
+    .scanning-bar {
+      width: 220px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scanning-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      border-radius: 2px;
+      animation: scan 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes scan {
+      0% { left: 0; }
+      100% { left: 60%; }
+    }
+
+    /* Error Banner */
+    .error-banner {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      display: none;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    /* Active Results Layout */
+    .results-layout {
+      display: none;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 992px) {
+      .results-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Column Cards */
+    .answer-card, .faults-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .panel-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* LLM Badge */
+    .badge-llm {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .badge-llm.groq {
+      background: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+      border: 1px solid rgba(249, 115, 22, 0.35);
+    }
+
+    .badge-llm.gemini {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .badge-latency {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    /* Formatted Answer Body */
+    .answer-content {
+      font-size: 0.96rem;
+      line-height: 1.75;
+      color: #e2e8f0;
+      word-break: break-word;
+    }
+
+    .answer-content p {
+      margin-bottom: 14px;
+    }
+
+    .answer-content strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .answer-content h2, .answer-content h3, .answer-content h4 {
+      color: var(--primary);
+      margin: 18px 0 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-left: 3px solid var(--primary);
+      padding-left: 8px;
+    }
+
+    [dir="rtl"] .answer-content h2, 
+    [dir="rtl"] .answer-content h3, 
+    [dir="rtl"] .answer-content h4 {
+      border-left: none;
+      border-right: 3px solid var(--primary);
+      padding-left: 0;
+      padding-right: 8px;
+    }
+
+    .answer-content ul, .answer-content ol {
+      margin: 8px 0 16px 20px;
+    }
+
+    [dir="rtl"] .answer-content ul, 
+    [dir="rtl"] .answer-content ol {
+      margin: 8px 20px 16px 0;
+    }
+
+    .answer-content li {
+      margin-bottom: 6px;
+    }
+
+    .answer-content code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #38bdf8;
+    }
+
+    /* Fallback markdown classes */
+    .md-h2, .md-h3, .md-h4 {
+      color: var(--primary);
+      margin: 16px 0 8px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .md-ul, .md-ol {
+      margin: 8px 0 14px 22px;
+    }
+    [dir="rtl"] .md-ul, [dir="rtl"] .md-ol {
+      margin: 8px 22px 14px 0;
+    }
+    .md-li, .md-oli {
+      margin-bottom: 5px;
+    }
+    .md-p {
+      margin-bottom: 12px;
+    }
+    .md-code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #38bdf8;
+    }
+
+    /* Matched Faults Cards */
+    .fault-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .fault-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      transition: all 0.2s;
+    }
+
+    .fault-card:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      background: var(--bg-surface-hover);
+    }
+
+    .fault-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .fault-id-system {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .fault-id-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .fault-system-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .score-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .fault-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    /* Severity Badges */
+    .severity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+
+    .severity-high {
+      background: var(--severity-high-bg);
+      color: var(--severity-high-text);
+      border: 1px solid var(--severity-high-border);
+    }
+
+    .severity-medium {
+      background: var(--severity-med-bg);
+      color: var(--severity-med-text);
+      border: 1px solid var(--severity-med-border);
+    }
+
+    .severity-low {
+      background: var(--severity-low-bg);
+      color: var(--severity-low-text);
+      border: 1px solid var(--severity-low-border);
+    }
+
+    /* Drive Advice */
+    .drive-advice-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 3px solid #f59e0b;
+      padding: 10px 12px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 12px;
+      font-size: 0.84rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    [dir="rtl"] .drive-advice-box {
+      border-left: none;
+      border-right: 3px solid #f59e0b;
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    }
+
+    .drive-advice-box strong {
+      color: #fbbf24;
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 3px;
+    }
+
+    /* OBD Codes */
+    .obd-codes-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .obd-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .obd-code-tag {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .obd-code-none {
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* Copy Button */
+    .btn-copy {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">
+          <!-- Automotive ECU / Scanner Icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+            <circle cx="7" cy="17" r="2"/>
+            <path d="M9 17h6"/>
+            <circle cx="17" cy="17" r="2"/>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <h1>CAR RAG SERVICE <span class="badge-demo">PROTOTYPE GUI</span></h1>
+          <p>Automotive Diagnostic Copilot &middot; BYD Knowledge Base</p>
+        </div>
+      </div>
+      <div class="api-status">
+        <div class="status-dot"></div>
+        <span>POST /api/v1/diagnose</span>
+      </div>
+    </header>
+
+    <!-- Top Configuration Bar -->
+    <div class="config-card">
+      <div class="config-group">
+        <div class="config-field">
+          <label for="cfg-make">Make:</label>
+          <input type="text" id="cfg-make" class="config-input input-text" value="BYD" placeholder="e.g. BYD">
+        </div>
+        <div class="config-field">
+          <label for="cfg-model">Model:</label>
+          <input type="text" id="cfg-model" class="config-input input-text" value="F3" placeholder="e.g. F3">
+        </div>
+        <div class="config-field">
+          <label for="cfg-topk">Top-K:</label>
+          <input type="number" id="cfg-topk" class="config-input input-num" value="2" min="1" max="10">
+        </div>
+      </div>
+      <div>
+        <button type="button" class="btn-reset" onclick="resetConfig()">Reset Defaults</button>
+      </div>
+    </div>
+
+    <!-- Quick Demo Questions Section -->
+    <div class="quick-section">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Quick Demo Scenarios (Click to test instantly)
+      </div>
+      <div class="quick-grid">
+        <!-- Arabic 1: Overheating in traffic -->
+        <button class="quick-btn" onclick="applyPreset(0, this)">
+          <div class="quick-btn-top">
+            <span class="lang-badge lang-ar">AR · مصري</span>
+            <span class="quick-btn-title">🌡️ سخونة في الزحمة</span>
+          </div>
+          <div class="quick-btn-preview" dir="rtl">العربية بتسخن مني في الزحمة والحرارة بتنزل لما بمشي، والتكييف بيضعف وأنا واقف</div>
+        </button>
+
+        <!-- Arabic 2: Rough idle / misfire -->
+        <button class="quick-btn" onclick="applyPreset(1, this)">
+          <div class="quick-btn-top">
+            <span class="lang-badge lang-ar">AR · مصري</span>
+            <span class="quick-btn-title">⚠️ نتشة ورجة سلانسيه</span>
+          </div>
+          <div class="quick-btn-preview" dir="rtl">الموتور بيترج جامد على السلانسيه وفيه نتشة مع السحب ولمبة الأعطال بتنور</div>
+        </button>
+
+        <!-- Arabic 3: Spongy brake pedal -->
+        <button class="quick-btn" onclick="applyPreset(2, this)">
+          <div class="quick-btn-top">
+            <span class="lang-badge lang-ar">AR · مصري</span>
+            <span class="quick-btn-title">🛑 بدال الفرامل بيهبط</span>
+          </div>
+          <div class="quick-btn-preview" dir="rtl">بدال الفرامل إسفنجي وبيهبط للأرض والعربية مش بتفرمل كويس</div>
+        </button>
+
+        <!-- English 1: OBD2 P0335 Stalling -->
+        <button class="quick-btn" onclick="applyPreset(3, this)">
+          <div class="quick-btn-top">
+            <span class="lang-badge lang-en">EN · English</span>
+            <span class="quick-btn-title">⚡ OBD2 P0335 Stall</span>
+          </div>
+          <div class="quick-btn-preview" dir="ltr">Engine stalls suddenly and won't restart, scanner shows fault code P0335</div>
+        </button>
+
+        <!-- English 2: Spongy brake pedal -->
+        <button class="quick-btn" onclick="applyPreset(4, this)">
+          <div class="quick-btn-top">
+            <span class="lang-badge lang-en">EN · English</span>
+            <span class="quick-btn-title">🔧 Spongy Brake Pedal</span>
+          </div>
+          <div class="quick-btn-preview" dir="ltr">Brake pedal feels spongy and sinks all the way to the floor when braking</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Question Input Box -->
+    <div class="query-card">
+      <div class="query-header">
+        <label for="question-input">Symptom Description or Fault Codes:</label>
+        <span class="shortcut-hint">Ctrl + Enter to Diagnose</span>
+      </div>
+      <div class="textarea-wrapper">
+        <textarea id="question-input" dir="auto" placeholder="Type vehicle symptoms or OBD2 codes in Egyptian Arabic or English (e.g., العربية بتسخن في الزحمة أو كود P0335)..."></textarea>
+      </div>
+      <div class="query-actions">
+        <div class="query-info" id="query-info">Ready to query vector knowledge base.</div>
+        <div class="btn-group">
+          <button type="button" class="btn-clear" onclick="clearAll()">Clear</button>
+          <button type="button" class="btn-diagnose" id="btn-diagnose" onclick="submitDiagnosis()">
+            <span id="btn-icon">⚡</span>
+            <span id="btn-text">Diagnose Vehicle</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Area -->
+    <div class="results-area" id="results-area">
+      <!-- Error Banner -->
+      <div class="error-banner" id="error-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div id="error-msg">Error occurred</div>
+      </div>
+
+      <!-- Scanning animation -->
+      <div class="scanning-loader" id="scanning-loader">
+        <div class="scanning-bar"></div>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Generating vector embeddings &amp; running LLM diagnostic reasoning...</p>
+      </div>
+
+      <!-- Empty State Placeholder -->
+      <div class="empty-state" id="empty-state">
+        <div class="empty-state-icon">🚗</div>
+        <h3>No Diagnosis Performed Yet</h3>
+        <p>Pick one of the Quick Demo scenarios above or enter an issue in Egyptian Arabic or English to query the RAG service.</p>
+      </div>
+
+      <!-- Active Results Layout -->
+      <div class="results-layout" id="results-layout">
+        <!-- Left: Formatted LLM Answer -->
+        <div class="answer-card">
+          <div class="panel-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Diagnostic Assessment
+            </h2>
+            <div class="header-badges">
+              <span id="llm-badge" class="badge-llm groq">llm_used</span>
+              <span id="latency-badge" class="badge-latency">0.0s</span>
+              <button type="button" class="btn-copy" onclick="copyAnswerText()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span id="copy-text">Copy</span>
+              </button>
+            </div>
+          </div>
+          <div class="answer-content" id="answer-content" dir="auto"></div>
+        </div>
+
+        <!-- Right: Matched Knowledge Base Records -->
+        <div class="faults-container">
+          <div class="panel-header">
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Matched Records
+            </h2>
+            <span class="badge-latency" id="match-count-badge">0 Matches</span>
+          </div>
+          <div class="fault-list" id="fault-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Demo scenarios based on BYD F3 dataset
+    const PRESETS = [
+      {
+        lang: 'ar',
+        title: 'سخونة في الزحمة',
+        question: 'العربية بتسخن مني في الزحمة والحرارة بتنزل لما بمشي، والتكييف بيضعف وأنا واقف'
+      },
+      {
+        lang: 'ar',
+        title: 'نتشة ورجة سلانسيه',
+        question: 'الموتور بيترج جامد على السلانسيه وفيه نتشة مع السحب ولمبة الأعطال منورة'
+      },
+      {
+        lang: 'ar',
+        title: 'بدال الفرامل بيهبط',
+        question: 'بدال الفرامل إسفنجي وبيهبط للأرض والعربية مش بتفرمل كويس'
+      },
+      {
+        lang: 'en',
+        title: 'OBD2 P0335 Stalling',
+        question: "Engine stalls suddenly and won't restart, scanner shows fault code P0335"
+      },
+      {
+        lang: 'en',
+        title: 'Spongy Brake Pedal',
+        question: 'Brake pedal feels spongy and sinks all the way to the floor when braking'
+      }
+    ];
+
+    let rawAnswerText = '';
+
+    // Apply Quick Demo Preset and immediately trigger diagnosis for seamless demo
+    function applyPreset(index, btnElem) {
+      const preset = PRESETS[index];
+      if (!preset) return;
+
+      const input = document.getElementById('question-input');
+      input.value = preset.question;
+      adjustTextareaHeight(input);
+
+      // Highlight active preset button
+      document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active-preset'));
+      if (btnElem) btnElem.classList.add('active-preset');
+
+      // Auto-trigger diagnosis immediately
+      submitDiagnosis();
+    }
+
+    // Reset Top Bar Config to defaults
+    function resetConfig() {
+      document.getElementById('cfg-make').value = 'BYD';
+      document.getElementById('cfg-model').value = 'F3';
+      document.getElementById('cfg-topk').value = 2;
+    }
+
+    // Auto-adjust textarea height
+    function adjustTextareaHeight(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(220, Math.max(90, textarea.scrollHeight)) + 'px';
+    }
+
+    const questionInput = document.getElementById('question-input');
+    questionInput.addEventListener('input', function() {
+      adjustTextareaHeight(this);
+    });
+
+    // Keyboard shortcut: Ctrl + Enter
+    questionInput.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        submitDiagnosis();
+      }
+    });
+
+    // Clear everything
+    function clearAll() {
+      questionInput.value = '';
+      adjustTextareaHeight(questionInput);
+      document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active-preset'));
+      document.getElementById('empty-state').style.display = 'block';
+      document.getElementById('results-layout').style.display = 'none';
+      document.getElementById('scanning-loader').style.display = 'none';
+      document.getElementById('error-banner').style.display = 'none';
+      document.getElementById('query-info').textContent = 'Ready to query vector knowledge base.';
+    }
+
+    // Escape HTML helper
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Lightweight Markdown Formatter (Used if marked CDN fails or offline)
+    function parseMarkdownFallback(md) {
+      if (!md) return '';
+      let text = escapeHtml(md);
+
+      // Headers (###, ##, #)
+      text = text.replace(/^### (.*$)/gim, '<h4 class="md-h4">$1</h4>');
+      text = text.replace(/^## (.*$)/gim, '<h3 class="md-h3">$1</h3>');
+      text = text.replace(/^# (.*$)/gim, '<h2 class="md-h2">$1</h2>');
+
+      // Bold & Italic
+      text = text.replace(/\*\*\*(.*?)\*\*\*/gim, '<strong><em>$1</em></strong>');
+      text = text.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+      text = text.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+
+      // Inline code
+      text = text.replace(/`([^`]+)`/gim, '<code class="md-code">$1</code>');
+
+      // Bullet lists
+      text = text.replace(/^\s*[-*]\s+(.*)$/gim, '<li class="md-li">$1</li>');
+      text = text.replace(/(<li class="md-li">[\s\S]*?<\/li>)/gim, '<ul class="md-ul">$1</ul>');
+      text = text.replace(/<\/ul>\s*<ul class="md-ul">/gim, '');
+
+      // Numbered lists
+      text = text.replace(/^\s*(\d+)\.\s+(.*)$/gim, '<li class="md-oli"><span style="color:var(--primary);">$1.</span> $2</li>');
+      text = text.replace(/(<li class="md-oli">[\s\S]*?<\/li>)/gim, '<ol class="md-ol">$1</ol>');
+      text = text.replace(/<\/ol>\s*<ol class="md-ol">/gim, '');
+
+      // Double line breaks into paragraphs
+      text = text.replace(/\n{2,}/g, '</p><p class="md-p">');
+      text = text.replace(/\n/g, '<br/>');
+
+      return '<div class="md-fallback"><p class="md-p">' + text + '</p></div>';
+    }
+
+    function renderMarkdown(md) {
+      if (window.marked && typeof window.marked.parse === 'function') {
+        try {
+          return window.marked.parse(md);
+        } catch (e) {
+          console.warn('marked.js parse failed, using fallback:', e);
+        }
+      }
+      return parseMarkdownFallback(md);
+    }
+
+    // Helper for Severity Badge styling
+    function getSeverityBadgeHtml(sev) {
+      const s = (sev || '').toLowerCase();
+      if (s === 'high') {
+        return '<span class="severity-badge severity-high">● High Severity</span>';
+      } else if (s === 'medium') {
+        return '<span class="severity-badge severity-medium">● Medium Severity</span>';
+      } else if (s === 'low') {
+        return '<span class="severity-badge severity-low">● Low Severity</span>';
+      }
+      return `<span class="severity-badge severity-medium">● ${escapeHtml(sev || 'Unknown')}</span>`;
+    }
+
+    // Copy formatted answer text
+    async function copyAnswerText() {
+      if (!rawAnswerText) return;
+      try {
+        await navigator.clipboard.writeText(rawAnswerText);
+        const copyTextSpan = document.getElementById('copy-text');
+        copyTextSpan.textContent = 'Copied!';
+        setTimeout(() => { copyTextSpan.textContent = 'Copy'; }, 1800);
+      } catch (err) {
+        console.error('Copy failed:', err);
+      }
+    }
+
+    // Main Diagnosis Trigger
+    async function submitDiagnosis() {
+      const question = questionInput.value.trim();
+      if (!question) {
+        questionInput.focus();
+        return;
+      }
+
+      const make = document.getElementById('cfg-make').value.trim() || 'BYD';
+      const model = document.getElementById('cfg-model').value.trim() || 'F3';
+      const topK = parseInt(document.getElementById('cfg-topk').value, 10) || 2;
+
+      // UI States
+      const btn = document.getElementById('btn-diagnose');
+      const btnIcon = document.getElementById('btn-icon');
+      const btnText = document.getElementById('btn-text');
+      const emptyState = document.getElementById('empty-state');
+      const scanningLoader = document.getElementById('scanning-loader');
+      const resultsLayout = document.getElementById('results-layout');
+      const errorBanner = document.getElementById('error-banner');
+      const queryInfo = document.getElementById('query-info');
+
+      btn.disabled = true;
+      btnIcon.innerHTML = '<div class="spinner"></div>';
+      btnText.textContent = 'Diagnosing...';
+
+      emptyState.style.display = 'none';
+      resultsLayout.style.display = 'none';
+      errorBanner.style.display = 'none';
+      scanningLoader.style.display = 'block';
+      queryInfo.textContent = `Querying: ${make} ${model} (Top-K: ${topK})...`;
+
+      const startTime = performance.now();
+
+      try {
+        const response = await fetch('/api/v1/diagnose', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            make: make,
+            model: model,
+            question: question,
+            top_k: topK
+          })
+        });
+
+        const elapsedSec = ((performance.now() - startTime) / 1000).toFixed(2);
+
+        if (!response.ok) {
+          let errDetail = `Server returned status ${response.status}`;
+          try {
+            const errJson = await response.json();
+            if (errJson && errJson.detail) errDetail = errJson.detail;
+          } catch (_) {}
+          throw new Error(errDetail);
+        }
+
+        const data = await response.json();
+
+        // 1. Render LLM Answer
+        rawAnswerText = data.answer || '';
+        const answerContainer = document.getElementById('answer-content');
+        answerContainer.innerHTML = renderMarkdown(data.answer);
+
+        // 2. LLM Used Badge
+        const llmBadge = document.getElementById('llm-badge');
+        const llmUsed = data.llm_used || 'unknown';
+        llmBadge.textContent = llmUsed;
+        if (llmUsed.toLowerCase().includes('groq')) {
+          llmBadge.className = 'badge-llm groq';
+          llmBadge.innerHTML = '⚡ ' + escapeHtml(llmUsed);
+        } else {
+          llmBadge.className = 'badge-llm gemini';
+          llmBadge.innerHTML = '✨ ' + escapeHtml(llmUsed);
+        }
+
+        // Latency
+        document.getElementById('latency-badge').textContent = `${elapsedSec}s`;
+
+        // 3. Matched Faults Cards
+        const faultList = document.getElementById('fault-list');
+        faultList.innerHTML = '';
+        const faults = data.matched_faults || [];
+        document.getElementById('match-count-badge').textContent = `${faults.length} Records Found`;
+
+        if (faults.length === 0) {
+          faultList.innerHTML = '<div style="color:var(--text-dim); font-size:0.85rem; padding:12px;">No matching records found in database.</div>';
+        } else {
+          faults.forEach(f => {
+            const card = document.createElement('div');
+            card.className = 'fault-card';
+
+            // OBD Codes
+            let obdHtml = '';
+            if (f.obd_codes && f.obd_codes.length > 0) {
+              obdHtml = f.obd_codes.map(c => `<span class="obd-code-tag">${escapeHtml(c)}</span>`).join('');
+            } else {
+              obdHtml = '<span class="obd-code-none">None</span>';
+            }
+
+            card.innerHTML = `
+              <div class="fault-top-row">
+                <div class="fault-id-system">
+                  <span class="fault-id-badge">${escapeHtml(f.id)}</span>
+                  <span class="fault-system-badge">${escapeHtml(f.system || 'General')}</span>
+                </div>
+                <span class="score-badge">Score: ${Number(f.score).toFixed(4)}</span>
+              </div>
+              <div class="fault-title" dir="auto">${escapeHtml(f.title)}</div>
+              ${getSeverityBadgeHtml(f.severity)}
+              <div class="drive-advice-box" dir="auto">
+                <strong>🚗 Can it be driven?</strong>
+                ${escapeHtml(f.drive_advice || 'No specific drive advice provided.')}
+              </div>
+              <div class="obd-codes-row">
+                <span class="obd-label">OBD2:</span>
+                ${obdHtml}
+              </div>
+            `;
+            faultList.appendChild(card);
+          });
+        }
+
+        // Show Results
+        scanningLoader.style.display = 'none';
+        resultsLayout.style.display = 'grid';
+        queryInfo.textContent = `Diagnosis finished in ${elapsedSec}s. Model: ${llmUsed}`;
+
+      } catch (err) {
+        scanningLoader.style.display = 'none';
+        emptyState.style.display = 'block';
+        errorBanner.style.display = 'flex';
+        document.getElementById('error-msg').textContent = `Diagnosis failed: ${err.message}. Make sure 'uvicorn app:app --port 8001' is running.`;
+        queryInfo.textContent = 'Diagnosis failed.';
+      } finally {
+        btn.disabled = false;
+        btnIcon.textContent = '⚡';
+        btnText.textContent = 'Diagnose Vehicle';
+      }
+    }
+  </script>
+</body>
+</html>
